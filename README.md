@@ -24,7 +24,7 @@ DexClassLoader(String dexPath, String optimizedDirectory, String librarySearchPa
 
 3.反射，获取到没有安装的extra.apk里面的drawable的b.png的id.
 
-4.******重点**********
+4.******重点
 生成可以找到extra.apk里面资源的resources
 
 ```
@@ -52,3 +52,10 @@ private Resources getPluginResources() {
 
 ```
 
+我们有了能够找到extra.apk里面资源的resources和反射获取到了extra.apk里面图片b.png的id 就可以获取到Drawable对象了
+
+```
+Drawable drawable = findPluginDrawable();
+                    imageView.setImageDrawable(drawable);
+
+```
