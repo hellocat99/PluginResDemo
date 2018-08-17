@@ -77,24 +77,10 @@ public class MainActivity extends AppCompatActivity {
                 PackageManager.GET_ACTIVITIES);
         if (packageArchiveInfo != null) {
             String packageName = packageArchiveInfo.applicationInfo.packageName;
-            File dexDir = getDir("dex", Context.MODE_PRIVATE);
-            DexClassLoader dexClassLoader = new DexClassLoader(pluginApkPath + File.separator + pluginApkName,
-                    dexDir.getAbsolutePath(), null, getClassLoader());
-            try {
-                Class<?> drawableClass = dexClassLoader.loadClass(packageName + ".R$drawable");
-                Field bField = drawableClass.getDeclaredField("b");
-                bField.setAccessible(true);
-                final int b = (int) bField.get(null);
-                Resources pluginResources = getPluginResources();
-                if (pluginResources != null) {
-                    return pluginResources.getDrawable(b);
-                }
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
+            Resources pluginResources = getPluginResources();
+            if (pluginResources != null) {
+                return pluginResources.getDrawable(pluginResources.getIdentifier("b", "drawable",
+                        packageName));
             }
         }
         return null;
